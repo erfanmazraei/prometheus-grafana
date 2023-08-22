@@ -606,11 +606,11 @@ alertmanager:
     storage:
       volumeClaimTemplate:
         spec:
-          storageClassName: "rook-cephfs"
+          storageClassName: "nfs-client"
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
-              storage: 2Gi
+              storage: 1Gi
               #          selector: {}
 
 
@@ -2730,7 +2730,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: "rook-cephfs"
+          storageClassName: "storage-class-name"
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
