@@ -1,6 +1,7 @@
 
 step 1 :
     create pvc for grafana and set it in value file :
+        kubectl apply -f grafana-pvc.yaml
 
 
 step 2 :
