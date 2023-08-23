@@ -1,10 +1,14 @@
 
 step 1 :
+    create namespace monitoring :
+        kubectl create ns monitoring
+
+step 2 :
     create pvc for grafana and set it in value file :
         kubectl apply -f grafana-pvc.yaml
 
 
-step 2 :
+step 3 :
     edit values file for set pv and pvc for pro gra and alertm :
         for alert manager :
             line 592-614
@@ -13,9 +17,6 @@ step 2 :
         for prometheus :
             line 2729-2737
 
-step 3 :
-    create namespace monitoring :
-        kubectl create ns monitoring
 
 step 4 :
     add and update repo helm :
