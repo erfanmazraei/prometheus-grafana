@@ -1,0 +1,30 @@
+step 1 :
+    you must have user and password in each redis pod , you can do it in init container :
+        redis-cli
+        auth requirepass
+        ACL SETUSER USERNAME +client +ping +info +config|get +cluster|info +slowlog +latency +memory +select +get +scan +xinfo +type +pfcount +strlen +llen +scard +zcard +hlen +xlen +eval allkeys on >PASSWORD #you must change USERNAME and PASSWORD
+
+step 2 :
+    create a Secret in the Kubernetes namespace :
+            kubectl create -n redis-exporter-namespace secret generic redis-exporter-auth \
+                --from-literal=user=USERNAME \ # you set USERNAME in step 1 
+                --from-literal=password=PASSWORD # you set PASSWORD in step 1 
+
+step 3 :
+    kubectl apply -f exporter-deployment.yaml
+
+step 4 :
+    kubectl apply -f redis-exporter-cluster-service.yaml
+
+step 5 :
+    use this command for know what label you must use :
+        Kubectl get prometheus -n <namespace> -o yaml :
+            you must find this section :
+                    serviceMonitorSelector:
+                        matchLabels:
+                            release: kube-prometheus-stack
+    any thing you see in matchLabels , you must set it as a lebel at monitoring-coreos-service-monitor.yaml
+
+step 6 :
+    kubectl apply -f monitoring-coreos-service-monitor.yaml
+    

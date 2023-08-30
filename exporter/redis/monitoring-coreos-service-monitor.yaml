@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: monitoring-pili
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack # this is for prometheus service discovery 
+#    app: redis-external-exporter
+#    k8s-app: redis-monitor
+spec:
+  selector:
+    matchLabels:
+      # Target app service ( like cluster ip )
+      app: redis
+  endpoints:
+  - interval: 15s
+    path: /metrics
+    port: redis-ext
+  namespaceSelector:
+    matchNames:
+    - monitoring
