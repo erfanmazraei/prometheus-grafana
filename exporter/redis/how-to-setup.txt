@@ -9,6 +9,8 @@ step 2 :
             kubectl create -n redis-exporter-namespace secret generic redis-exporter-auth \
                 --from-literal=user=USERNAME \ # you set USERNAME in step 1 
                 --from-literal=password=PASSWORD # you set PASSWORD in step 1 
+                
+    or you can apply redis-exporter-auth-secret.yaml
 
 step 3 :
     kubectl apply -f exporter-deployment.yaml
