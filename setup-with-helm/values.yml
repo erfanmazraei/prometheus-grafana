@@ -179,7 +179,7 @@ alertmanager:
   ##
   config:
     global:
-      resolve_timeout: 5m
+      resolve_timeout: 1m
     inhibit_rules:
       - source_matchers:
           - 'severity = critical'
@@ -204,15 +204,22 @@ alertmanager:
     route:
       group_by: ['namespace']
       group_wait: 30s
-      group_interval: 5m
-      repeat_interval: 12h
-      receiver: 'null'
+      group_interval: 2m
+      repeat_interval: 2m
+      receiver: 'email-k8s-admin'
       routes:
-      - receiver: 'null'
+      - receiver: 'email-k8s-admin'
         matchers:
-          - alertname =~ "InfoInhibitor|Watchdog"
+          - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown|TargetDown"
     receivers:
-    - name: 'null'
+    - name: 'email-k8s-admin'
+      email_configs:
+      - send_resolved: true
+        to: erfanmazraei@gmail.com
+        from: jira@tivanideh.com
+        smarthost: 5.9.129.57:587
+        auth_username: tivanide
+        auth_password: 'PAAS'
     templates:
     - '/etc/alertmanager/config/*.tmpl'
 
