@@ -215,17 +215,17 @@ alertmanager:
       repeat_interval: 2m
       receiver: 'slack'
       routes:
-      - receiver: 'null'
-        matchers:
-          - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown"
-      - receiver: 'slack'
+#      - receiver: 'null'
+#        matchers:
+#          - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown"
+#      - receiver: 'slack'
         matchers:
           - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown|TargetDown"
         continue: true
 
         
     receivers:
-    - name: 'null'
+#    - name: 'null'
     - name: 'slack'
       slack_configs:
       - channel: '#loki-dev-log'
