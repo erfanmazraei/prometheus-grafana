@@ -99,7 +99,7 @@ defaultRules:
 ## Provide custom recording or alerting rules to be deployed into the cluster.
 ##
 additionalPrometheusRulesMap: {}
-#  rule-name:
+  rule-name:
     groups:
     - name: AllInstances
       rules:
