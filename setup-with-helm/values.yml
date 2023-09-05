@@ -100,11 +100,17 @@ defaultRules:
 ##
 additionalPrometheusRulesMap: {}
 #  rule-name:
-#    groups:
-#    - name: my_group
-#      rules:
-#      - record: my_record
-#        expr: 100 * my_record
+    groups:
+    - name: AllInstances
+      rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        annotations:
+          title: 'Instance {{ $labels.instance }} down'
+          description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.'
+        labels:
+          severity: 'critical'
 
 ##
 global:
