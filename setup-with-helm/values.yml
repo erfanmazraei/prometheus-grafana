@@ -186,7 +186,7 @@ alertmanager:
   config:
     global:
       resolve_timeout: 5m
-      slack_api_url: "https://hooks.slack.com/services/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/slack"
+      slack_api_url: "https://hooks.slack.com/services/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"
     inhibit_rules:
       - source_matchers:
           - 'severity = critical'
