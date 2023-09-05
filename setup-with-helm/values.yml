@@ -88,19 +88,19 @@ defaultRules:
 
 ## Deprecated way to provide custom recording or alerting rules to be deployed into the cluster.
 ##
- additionalPrometheusRules:
-  - name: my-rule-file
-    groups:
-      - name: AllInstances
-        rules:
-        - alert: InstanceDown
-          expr: up == 0
-          for: 1m
-          annotations:
-            title: 'Instance {{ $labels.instance }} down'
-            description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.'
-          labels:
-            severity: 'critical'
+  additionalPrometheusRules:
+    - name: my-rule-file
+      groups:
+        - name: AllInstances
+          rules:
+          - alert: InstanceDown
+            expr: up == 0
+            for: 1m
+            annotations:
+              title: 'Instance {{ $labels.instance }} down'
+              description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.'
+            labels:
+              severity: 'critical'
 
 ## Provide custom recording or alerting rules to be deployed into the cluster.
 ##
