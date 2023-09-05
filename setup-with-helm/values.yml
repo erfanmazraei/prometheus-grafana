@@ -217,10 +217,10 @@ alertmanager:
       routes:
       - receiver: 'null'
         matchers:
-          - alertname =~ "InfoInhibitor|Watchdog"
+          - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown"
       - receiver: 'slack'
         matchers:
-          - alertname =~ "InfoInhibitor|Watchdog"
+          - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown"
         continue: true
 
         
