@@ -205,9 +205,9 @@ alertmanager:
     route:
       group_by: ['namespace']
       group_wait: 30s
-      group_interval: 5m
-      repeat_interval: 12h
-      receiver: 'null'
+      group_interval: 2m
+      repeat_interval: 2m
+      receiver: 'slack'
       routes:
       - receiver: 'null'
         matchers:
