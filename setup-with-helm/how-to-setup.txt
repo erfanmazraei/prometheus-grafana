@@ -26,7 +26,7 @@ step 4 :
 step 5 :
     setup with helm :
         helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack
-         --create-namespace --namespace monitoring2 --values values.yml
+         --create-namespace --namespace monitoring --values values.yml
 
 
 ## unistall : helm uninstall kube-prometheus-stack
