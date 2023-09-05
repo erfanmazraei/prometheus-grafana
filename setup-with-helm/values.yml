@@ -220,7 +220,7 @@ alertmanager:
           - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown"
       - receiver: 'slack'
         matchers:
-          - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown"
+          - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown|TargetDown"
         continue: true
 
         
