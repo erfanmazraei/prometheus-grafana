@@ -29,6 +29,81 @@ step 5 :
          --create-namespace --namespace monitoring --values values.yml
 
 
+step 6:
+    if you want add reciever for you aletmanager ,you must change these lines in values.yml :
+        config:
+            global:
+              resolve_timeout: 5m
+              slack_api_url: "https://hooks.slack.com/services/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"
+            inhibit_rules:
+              - source_matchers:
+                  - 'severity = critical'
+                target_matchers:
+                  - 'severity =~ warning|info'
+                equal:
+                  - 'namespace'
+                  - 'alertname'
+              - source_matchers:
+                  - 'severity = warning'
+                target_matchers:
+                  - 'severity = info'
+                equal:
+                  - 'namespace'
+                  - 'alertname'
+              - source_matchers:
+                  - 'alertname = InfoInhibitor'
+                target_matchers:
+                  - 'severity = info'
+                equal:
+                  - 'namespace'
+            route:
+              group_by: ['namespace']
+              group_wait: 30s
+              group_interval: 2m
+              repeat_interval: 2m
+              receiver: 'slack'
+              routes:
+              - receiver: 'slack'
+                matchers:
+                  - alertname =~ "InfoInhibitor|Watchdog|KubeControllerManagerDown|TargetDown"
+                continue: true        
+            receivers:
+            - name: 'slack'
+              slack_configs:
+              - channel: '#loki-dev-log'
+                send_resolved: true
+                title: '[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] Monitoring Event Notification'
+                text: >-
+                  {{ range .Alerts }}
+                    *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+                    *Description:* {{ .Annotations.description }}
+                    *Graph:* <{{ .GeneratorURL }}|:chart_with_upwards_trend:> *Runbook:* <{{ .Annotations.runbook }}|:spiral_note_pad:>
+                    *Details:*
+                    {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+                    {{ end }}
+                  {{ end }}
+            templates:
+            - '/etc/alertmanager/config/*.tmpl'
+
+step 7:
+    if you want add new rule for trigger alert you must change and add these lines to values.yml:
+        additionalPrometheusRulesMap:
+            rule-name:
+              groups:
+              - name: AllInstances2
+                rules:
+                - alert: InstanceDown
+                  expr: up == 0
+                  for: 1m
+                  annotations:
+                    title: 'Instance {{ $labels.instance }} down222222'
+                    description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.'
+                  labels:
+                    severity: 'critical2'
+
+
+
+
 ## unistall : helm uninstall kube-prometheus-stack
 
 
