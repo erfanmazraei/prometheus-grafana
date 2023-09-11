@@ -28,8 +28,10 @@ step 5 :
         helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack
          --create-namespace --namespace monitoring --values values.yml
 
+step 6 :
+    if after deploy your alertmanager be disable , maybe you need change replica of aletmanager from 1 to mare than 1 by edit values.yml file
 
-step 6:
+step 7:
     if you want add reciever for you aletmanager ,you must change these lines in values.yml :
         config:
             global:
@@ -85,7 +87,7 @@ step 6:
             templates:
             - '/etc/alertmanager/config/*.tmpl'
 
-step 7:
+step 8:
     if you want add new rule for trigger alert you must change and add these lines to values.yml:
         additionalPrometheusRulesMap:
             rule-name:
